@@ -1,0 +1,10 @@
+
+Fifty Move Rule
+
+3x Rep
+En Passant
+
+Side
+
+Ply(Number of half moves) If White makes a move and then black makes a move that is 2 Ply, if only White has made a move that is 1 Ply
+
