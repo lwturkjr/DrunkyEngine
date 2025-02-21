@@ -14,8 +14,8 @@ int main() {
     printf("D2 Added:\n\n");
     PrintBitBoard(playBitBoard);
 
-    playBitBoard |= (1ULL << SQ64(D7));
-    printf("D7 Added:\n\n");
+    playBitBoard |= (1ULL << SQ64(G2));
+    printf("G2 Added:\n\n");
     PrintBitBoard(playBitBoard);
     
     return 0;
