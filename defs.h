@@ -2,6 +2,7 @@
 #define DEFS_H
 
 #include "stdlib.h"
+#include "stdio.h"
 
 #define DEBUG
 
@@ -26,7 +27,7 @@ typedef unsigned long long U64;
 
 #define MAXGAMEMOVES 2048
 
-#define START_FEN rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+#define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
@@ -48,13 +49,13 @@ enum {
 
 enum { FALSE, TRUE };
 
-// Represented by 4 bits 1 0 0 1 (WKCA BQCA)
+// Castling permissions represented by 4 bits 1 0 0 1 (WKCA BQCA)
 enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8 };
 
 typedef struct {
 
     int move;
-    int castPerm;
+    int castlePerm;
     int enPas;
     int fiftyMove;
     U64 posKey;
@@ -76,7 +77,7 @@ typedef struct {
     int ply;
     int hisPly;
 
-    int castPerm;
+    int castlePerm;
 
     U64 posKey;
 
@@ -111,9 +112,13 @@ extern int Sq120ToSq64[BRD_SQ_NUM];
 extern int Sq64ToSq120[64];
 extern U64 SetMask[64];
 extern U64 ClearMask[64];
-extern U64 PieceKeys [13][120];
+extern U64 PieceKeys[13][120];
 extern U64 SideKey;
 extern U64 CastleKeys[16];
+extern char PceChar[];
+extern char SideChar[];
+extern char RankChar[];
+extern char FileChar[];
 
 /* FUNCTIONS */
 
@@ -130,5 +135,7 @@ extern U64 GeneratePosKey(const S_BOARD *pos);
 
 // board.c
 extern void ResetBoard(S_BOARD *pos);
+extern int ParseFen(char *fen, S_BOARD *pos);
+extern void PrintBoard(const S_BOARD *pos);
 
 #endif
