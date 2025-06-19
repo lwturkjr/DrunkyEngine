@@ -1,7 +1,7 @@
 // board.c
 
-#include "defs.h"
 #include "stdio.h"
+#include "defs.h"
 
 int ParseFen(char *fen, S_BOARD *pos) {
 
@@ -16,9 +16,10 @@ int ParseFen(char *fen, S_BOARD *pos) {
     int sq64 = 0;
     int sq120 = 0;
 
+    //printf("Resetting Board\n");
     ResetBoard(pos);
 
-    while ((rank >= RANK_1) && *fen) {
+    while (rank >= RANK_1 && *fen) {
         count = 1;
         switch (*fen) {
             case 'p': piece = bP; break;
@@ -45,68 +46,64 @@ int ParseFen(char *fen, S_BOARD *pos) {
                 piece = EMPTY;
                 count = *fen - '0';
                 break;
-            
+
             case '/':
             case ' ':
                 rank--;
                 file = FILE_A;
                 fen++;
                 continue;
-            
+
             default:
                 printf("FEN error \n");
                 return -1;
-
-
         }
-
-        for(i = 0; i < count; i++) {
+        for (i = 0; i < count; i++) {
             sq64 = rank * 8 + file;
-            sq120 = SQ120(sq64);
-            if(piece != EMPTY) {
+			sq120 = SQ120(sq64);
+            if (piece != EMPTY) {
                 pos->pieces[sq120] = piece;
             }
-            file++;
+			file++;
         }
-        fen++;
-    }
+		fen++;
+	}
 
-    // Make sure fen is currently a w or a b.
     ASSERT(*fen == 'w' || *fen == 'b');
-    // if fen is pointing at w it's white's move otherwise it's black's move.
-    pos->side = (*fen == 'w') ? WHITE : BLACK;
-    fen += 2;
 
-    for(i = 0; i < 4; i++) {
-        if(*fen == ' ') {
+	pos->side = (*fen == 'w') ? WHITE : BLACK;
+	fen += 2;
+
+	for (i = 0; i < 4; i++) {
+        if (*fen == ' ') {
             break;
         }
-        switch(*fen) {
-            case 'K': pos->castlePerm |= WKCA; break;
-            case 'Q': pos->castlePerm |= WQCA; break;
-            case 'k': pos->castlePerm |= BKCA; break;
-            case 'q': pos->castlePerm |= BQCA; break;
-            default: break;
+		switch(*fen) {
+			case 'K': pos->castlePerm |= WKCA; break;
+			case 'Q': pos->castlePerm |= WQCA; break;
+			case 'k': pos->castlePerm |= BKCA; break;
+			case 'q': pos->castlePerm |= BQCA; break;
+			default:	     break;
         }
-        fen++;
+		fen++;
+	}
+	fen++;
+
+	ASSERT(pos->castlePerm>=0 && pos->castlePerm <= 15);
+
+    if (*fen != '-') {
+		file = fen[0] - 'a';
+		rank = fen[1] - '1';
+
+		ASSERT(file>=FILE_A && file <= FILE_H);
+		ASSERT(rank>=RANK_1 && rank <= RANK_8);
+
+		pos->enPas = FR2SQ(file,rank);
     }
-    fen++;
-    ASSERT(pos->castlePerm>=0 && pos->castlePerm<=15);
 
-    if(*fen != '-') {
-        file = fen[0] - 'a';
-        rank = fen[1] - '1';
+	pos->posKey = GeneratePosKey(pos);
 
-        ASSERT(file>=FILE_A && file<=FILE_H);
-        ASSERT(rank>=RANK_1 && rank<=RANK_8);
-
-        pos->enPas = FR2SQ(file, rank);
-    }
-
-    pos->posKey = GeneratePosKey(pos);
-
-    return 0;
-
+	return 0;
 }
 
 void ResetBoard(S_BOARD *pos) {
@@ -125,12 +122,13 @@ void ResetBoard(S_BOARD *pos) {
 		pos->bigPce[index] = 0;
 		pos->majPce[index] = 0;
 		pos->minPce[index] = 0;
+		//pos->material[index] = 0;
 	}
 
-    for(index = 0; index < 3; ++index) {
+	for(index = 0; index < 3; ++index) {
 		pos->pawns[index] = 0ULL;
 	}
-
+    
     for(index = 0; index < 13; ++index) {
 		pos->pceNum[index] = 0;
 	}

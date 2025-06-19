@@ -13,8 +13,8 @@ U64 GeneratePosKey(const S_BOARD *pos) {
     // pieces
     for(sq = 0; sq < BRD_SQ_NUM; ++sq) {
         piece = pos->pieces[sq];
-        if(piece!=NO_SQ && piece!=EMPTY) {
-            ASSERT(piece>=wP && piece<=bK);
+        if(piece!=NO_SQ && piece!=EMPTY /*&& piece!=OFFBOARD*/) { 
+            ASSERT(piece>=wP && piece<=bK); // seems to currently be having an issue with parsing the FEN?
             finalKey ^= PieceKeys[piece][sq];
         }
     }

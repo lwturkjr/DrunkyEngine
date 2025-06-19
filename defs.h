@@ -52,8 +52,8 @@ enum { FALSE, TRUE };
 // Castling permissions represented by 4 bits 1 0 0 1 (WKCA BQCA)
 enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8 };
 
-typedef struct {
 
+typedef struct {
     int move;
     int castlePerm;
     int enPas;
@@ -62,25 +62,17 @@ typedef struct {
 
 } S_UNDO;
 
-
 typedef struct { 
-
     int pieces[BRD_SQ_NUM];
     U64 pawns[3]; 
-
     int KingSq[2];
-
     int side;
     int enPas;
     int fiftyMove;
-
     int ply;
     int hisPly;
-
     int castlePerm;
-
     U64 posKey;
-
     int pceNum[13]; // Stores piece value, bK is 12
     int bigPce[3]; // Store number of big Pieces (anything that isn't a pawn) by color
     int majPce[3]; // Major Pieces Rooks/Queens
@@ -90,9 +82,6 @@ typedef struct {
 
     // piece list
     int pList[13][10];
-
-    // pList[wN] [0] = E1;
-    // pList[wN] [1] = D4;.. .. ..
 
 } S_BOARD;
 
@@ -136,6 +125,6 @@ extern U64 GeneratePosKey(const S_BOARD *pos);
 // board.c
 extern void ResetBoard(S_BOARD *pos);
 extern int ParseFen(char *fen, S_BOARD *pos);
-extern void PrintBoard(const S_BOARD *pos);
+//extern void PrintBoard(const S_BOARD *pos);
 
 #endif
