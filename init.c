@@ -47,6 +47,19 @@ void InitFilesRanksBrd() {
 			RanksBrd[sq] = rank;
 		}
 	}
+
+	/*
+	printf("\nFilesBrd\n");
+	for(index = 0; index < BRD_SQ_NUM; ++index){
+		if(index%10==0 && index!=0) printf("\n");
+		printf("%4d",FilesBrd[index]);
+	}
+	printf("\nRanksBrd\n");
+	for(index = 0; index < BRD_SQ_NUM; ++index){
+		if(index%10==0 && index!=0) printf("\n");
+		printf("%4d",RanksBrd[index]);
+	}
+	*/
 }
 
 void InitHashKeys() {
@@ -110,4 +123,5 @@ void AllInit() {
     InitSq120To64();
     InitBitMasks();
     InitHashKeys();
+	InitFilesRanksBrd();
 }
