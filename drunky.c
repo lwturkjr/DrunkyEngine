@@ -12,9 +12,9 @@ int main() {
 
     AllInit();
 
-    S_BOARD board[1];
-    ParseFen(START_FEN, board);
-    /*S_BOARD board[1]; // This isn't working, something with ParseFen function?
+    //S_BOARD board[1];
+    //ParseFen(START_FEN, board);
+    S_BOARD board[1]; // This isn't working, something with ParseFen function?
 
     ParseFen(START_FEN, board);
     PrintBoard(board);
@@ -23,7 +23,7 @@ int main() {
     ParseFen(FEN01, board);
     PrintBoard(board);
     ParseFen(FEN02, board);
-    PrintBoard(board);*/
+    PrintBoard(board);
 
     return 0;
 

@@ -118,14 +118,13 @@ void ResetBoard(S_BOARD *pos) {
 		pos->pieces[SQ120(index)] = EMPTY;
 	}
 
-    for(index = 0; index < 2; ++index) {
+    for(index = 0; index < 3; ++index) {
 		pos->bigPce[index] = 0;
 		pos->majPce[index] = 0;
 		pos->minPce[index] = 0;
-		//pos->material[index] = 0;
 	}
 
-	for(index = 0; index < 3; ++index) {
+    for(index = 0; index < 3; ++index) {
 		pos->pawns[index] = 0ULL;
 	}
     
@@ -156,7 +155,7 @@ void PrintBoard(const S_BOARD *pos) {
 
     for(rank = RANK_8; rank >= RANK_1; rank--) {
         printf("%d  ",rank+1);
-        for(file = FILE_A; file >= FILE_H; file++) {
+        for(file = FILE_A; file <= FILE_H; file++) {
             sq = FR2SQ(file,rank);
             piece = pos->pieces[sq];
             printf("%3c",PceChar[piece]);
@@ -174,8 +173,6 @@ void PrintBoard(const S_BOARD *pos) {
         pos->castlePerm & WKCA ? 'K':'-',
         pos->castlePerm & WQCA ? 'Q':'-',
         pos->castlePerm & BKCA ? 'k':'-',
-        pos->castlePerm & BQCA ? 'q':'-'
-        );
+        pos->castlePerm & BQCA ? 'q':'-');
     printf("PosKey:%llX\n",pos->posKey);
-
 }
